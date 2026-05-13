@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Annotation Statistics Viewer</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Task Selection Modal -->
+    <div id="task-modal" class="modal-overlay active">
+        <div class="modal-dialog">
+            <h2>📊 Annotation Statistics Viewer</h2>
+            <div class="modal-section">
+                <label class="modal-label">Select Annotation Task:</label>
+                <select id="task-select" size="4">
+                    <!-- Populated dynamically -->
+                </select>
+            </div>
+            <button id="start-btn" class="btn-primary">View Statistics</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <h1>📊 Annotation Statistics</h1>
+                <span id="task-name-badge" class="task-badge"></span>
+            </div>
+            <div class="header-right">
+                <button id="change-task-btn" class="btn-secondary">Change Task</button>
+            </div>
+        </header>
+
+        <!-- View Tabs -->
+        <div class="tabs">
+            <button class="tab active" data-view="summary">Summary View</button>
+            <button class="tab" data-view="per-image">Per-Image View</button>
+        </div>
+
+        <!-- Summary View -->
+        <div id="summary-view" class="view active">
+            <div class="stats-grid">
+                <!-- Annotator Filter Card -->
+                <div class="card filter-card">
+                    <div class="card-header-row">
+                        <h3>👥 Filter Annotators</h3>
+                        <div class="filter-actions">
+                            <button id="btn-select-all" class="btn-xs">Select All</button>
+                            <button id="btn-deselect-all" class="btn-xs">Deselect All</button>
+                        </div>
+                    </div>
+                    <div id="annotator-filter-list" class="filter-list">
+                        <!-- Populated dynamically -->
+                    </div>
+                </div>
+
+                <!-- Model Filter Card -->
+                <div class="card filter-card">
+                    <div class="card-header-row">
+                        <h3>🤖 Filter Models</h3>
+                        <div class="filter-actions">
+                            <button id="btn-select-all-models" class="btn-xs">Select All</button>
+                            <button id="btn-deselect-all-models" class="btn-xs">Deselect All</button>
+                        </div>
+                    </div>
+                    <div id="model-filter-list" class="filter-list">
+                        <!-- Populated dynamically -->
+                    </div>
+                </div>
+
+                <!-- Overview Card -->
+                <div class="card overview-card">
+                    <h3>📈 Overview</h3>
+                    <div class="overview-stats">
+                        <div class="stat-item">
+                            <span class="stat-value" id="total-images">-</span>
+                            <span class="stat-label">Total Images</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value" id="total-models">-</span>
+                            <span class="stat-label">Models</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value" id="total-annotators">-</span>
+                            <span class="stat-label">Annotators</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Inter-Annotator Agreement Card -->
+                <div class="card agreement-card">
+                    <h3>🤝 Inter-Annotator Agreement</h3>
+                    <div id="agreement-content">
+                        <!-- Populated dynamically -->
+                    </div>
+                </div>
+
+                <!-- Model Comparison Card -->
+                <div class="card model-card">
+                    <h3>🏆 Model Comparison</h3>
+                    <div id="model-comparison-content">
+                        <table class="stats-table">
+                            <thead>
+                                <tr>
+                                    <th>Model</th>
+                                    <th>Score</th>
+                                    <th>Images</th>
+                                </tr>
+                            </thead>
+                            <tbody id="model-table-body">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Per-Annotator Card -->
+                <div class="card annotator-card">
+                    <h3>👤 Per-Annotator Statistics</h3>
+                    <div id="annotator-content">
+                        <table class="stats-table">
+                            <thead>
+                                <tr>
+                                    <th>Annotator</th>
+                                    <th>Avg Score</th>
+                                    <th>Count</th>
+                                </tr>
+                            </thead>
+                            <tbody id="annotator-table-body">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Per-Image View -->
+        <div id="per-image-view" class="view">
+            <div class="per-image-layout">
+                <!-- Image List Sidebar -->
+                <div class="image-list-panel">
+                    <div class="panel-header">
+                        <h3>Images</h3>
+                        <input type="text" id="image-search" placeholder="Search..." class="search-input">
+                    </div>
+                    <div class="image-list" id="image-list">
+                        <!-- Populated dynamically -->
+                    </div>
+                </div>
+
+                <!-- Image Display -->
+                <div class="image-display-panel">
+                    <div class="image-container">
+                        <img id="main-image" src="" alt="Generated Image">
+                        <canvas id="heatmap-canvas"></canvas>
+                    </div>
+                    <div class="heatmap-controls">
+                        <label class="toggle-label">
+                            <input type="checkbox" id="show-heatmap">
+                            Show Artifact Heatmap
+                        </label>
+
+                        <div id="heatmap-legend" class="heatmap-legend">
+                            <span>Low</span>
+                            <div class="legend-bar"></div>
+                            <span>High Agreement</span>
+                        </div>
+
+                        <div class="annotator-checkboxes" id="annotator-checkboxes">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Statistics Panel -->
+                <div class="stats-panel">
+                    <h3>Image Statistics</h3>
+                    <div class="image-info" id="image-info">
+                        <div class="info-row">
+                            <span class="info-label">Model:</span>
+                            <span class="info-value" id="info-model">-</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Prompt ID:</span>
+                            <span class="info-value" id="info-prompt-id">-</span>
+                        </div>
+                    </div>
+
+                    <div class="annotation-stats" id="annotation-stats">
+                        <!-- Likert Rating Stats -->
+                        <div class="stat-section" id="likert-section" style="display: none;">
+                            <h4>Rating</h4>
+                            <div class="stat-row">
+                                <span>Mean:</span>
+                                <span id="likert-mean" class="stat-highlight">-</span>
+                            </div>
+                            <div class="stat-row">
+                                <span>Std:</span>
+                                <span id="likert-std">-</span>
+                            </div>
+                            <div class="annotator-breakdown" id="likert-breakdown">
+                                <!-- Per-annotator values -->
+                            </div>
+                        </div>
+
+                        <!-- Artifact Mask Stats -->
+                        <div class="stat-section" id="mask-section" style="display: none;">
+                            <h4>Artifact Coverage</h4>
+                            <div class="annotator-breakdown" id="mask-breakdown">
+                                <!-- Per-annotator values -->
+                            </div>
+                        </div>
+
+                        <!-- Text Per-Word Stats -->
+                        <div class="stat-section" id="text-section" style="display: none;">
+                            <h4>Text Accuracy</h4>
+                            <div class="annotator-breakdown" id="text-breakdown">
+                                <!-- Per-annotator values -->
+                            </div>
+                        </div>
+
+                        <!-- Binary QA Stats -->
+                        <div class="stat-section" id="bqa-section" style="display: none;">
+                            <h4>Binary QA</h4>
+                            <div class="annotator-breakdown" id="bqa-breakdown">
+                                <!-- Per-annotator values -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>

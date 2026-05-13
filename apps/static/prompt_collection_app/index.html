@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prompt Collection Builder</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="header-left">
+                    <h1 class="title">
+                        <span class="title-icon">📚</span>
+                        Prompt Collection Builder
+                    </h1>
+                    <div class="stats-bar">
+                        <div class="stat-item">
+                            <span class="stat-label">Dataset</span>
+                            <select id="directorySelect" class="directory-select">
+                                <option value="">Loading...</option>
+                            </select>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">JSON File</span>
+                            <select id="jsonFileSelect" class="directory-select">
+                                <option value="">Loading...</option>
+                            </select>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Total Prompts</span>
+                            <span class="stat-value" id="totalPrompts">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Filtered</span>
+                            <span class="stat-value" id="filteredPrompts">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Selected</span>
+                            <span class="stat-value" id="selectedPrompts">0</span>
+                        </div>
+                    </div>
+                </div>
+                <button id="saveCollection" class="btn btn-primary save-btn">
+                    💾 Save Prompt Collection
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <div class="filter-section">
+                    <h2 class="section-title">
+                        <span class="icon">🔍</span>
+                        Filters
+                    </h2>
+
+                    <div class="filter-group">
+                        <label for="skillFilter" class="filter-label">Skill</label>
+                        <select id="skillFilter" class="filter-select">
+                            <option value="">All Skills</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="subskillFilter" class="filter-label">Subskill</label>
+                        <select id="subskillFilter" class="filter-select" disabled>
+                            <option value="">All Subskills</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="showOnlySelected">
+                            <span>Show Only Selected</span>
+                        </label>
+                    </div>
+
+                    <button id="clearFilters" class="btn btn-secondary">Clear Filters</button>
+                </div>
+
+                <div class="filter-section">
+                    <h2 class="section-title">
+                        <span class="icon">📂</span>
+                        Load Collection
+                    </h2>
+
+                    <div class="filter-group">
+                        <label for="collectionSelect" class="filter-label">Saved Collection</label>
+                        <select id="collectionSelect" class="filter-select">
+                            <option value="">-- Select a collection --</option>
+                        </select>
+                    </div>
+
+                    <button id="loadCollection" class="btn btn-primary" style="width: 100%;">📂 Load Collection</button>
+                    <button id="clearSelection" class="btn btn-secondary" style="width: 100%; margin-top: 0.5rem;">🗑️
+                        Clear Selection</button>
+
+                    <div id="loadStatus" class="load-status" style="display: none;"></div>
+                </div>
+            </aside>
+
+            <!-- Content Area -->
+            <main class="content">
+                <!-- Prompts List -->
+                <section class="prompts-section">
+                    <h2 class="section-title">
+                        <span class="icon">📝</span>
+                        Prompts
+                    </h2>
+                    <div class="search-section">
+                        <input type="text" id="promptIdSearch" class="search-input"
+                            placeholder="Search by Prompt ID...">
+                        <button id="clearSearch" class="btn btn-secondary">Clear</button>
+                    </div>
+                    <div id="promptsList" class="prompts-list">
+                        <div class="loading">Loading prompts...</div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- Save Modal -->
+    <div class="modal-overlay" id="saveModal" style="display: none;">
+        <div class="modal-container save-modal">
+            <div class="modal-header">
+                <h2 class="modal-title">
+                    <span class="icon">💾</span>
+                    Save Prompt Collection
+                </h2>
+                <button id="closeSaveModal" class="modal-close-btn">✕</button>
+            </div>
+
+            <div class="modal-content">
+                <div class="save-info">
+                    <p>You are about to save <strong id="savePromptCount">0</strong> prompts to a JSON file.</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="collectionFilename" class="form-label">Filename</label>
+                    <input type="text" id="collectionFilename" class="form-input" placeholder="my_prompt_collection">
+                    <small class="form-hint">.json extension will be added automatically</small>
+                </div>
+
+                <div class="modal-actions">
+                    <button id="cancelSave" class="btn btn-secondary">Cancel</button>
+                    <button id="confirmSave" class="btn btn-primary">Save Collection</button>
+                </div>
+
+                <div id="saveStatus" class="save-status" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>

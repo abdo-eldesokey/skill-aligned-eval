@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>T2I Prompts Skill Analyzer</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="header-left">
+                    <h1 class="title">
+                        <span class="title-icon">🎨</span>
+                        T2I Prompts Skill Analyzer
+                    </h1>
+                    <div class="stats-bar">
+                        <div class="stat-item">
+                            <span class="stat-label">Dataset</span>
+                            <select id="directorySelect" class="directory-select">
+                                <option value="">Loading...</option>
+                            </select>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">JSON File</span>
+                            <select id="jsonFileSelect" class="directory-select">
+                                <option value="">Loading...</option>
+                            </select>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Total Prompts</span>
+                            <span class="stat-value" id="totalPrompts">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Filtered</span>
+                            <span class="stat-value" id="filteredPrompts">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Skills</span>
+                            <span class="stat-value" id="totalSkills">0</span>
+                        </div>
+                    </div>
+                </div>
+                <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">
+                    <span id="themeIcon">🌙</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <div class="filter-section">
+                    <h2 class="section-title">
+                        <span class="icon">🔍</span>
+                        Filters
+                    </h2>
+                    
+                    <div class="filter-group">
+                        <label for="skillFilter" class="filter-label">Skill</label>
+                        <select id="skillFilter" class="filter-select">
+                            <option value="">All Skills</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="subskillFilter" class="filter-label">Subskill</label>
+                        <select id="subskillFilter" class="filter-select" disabled>
+                            <option value="">All Subskills</option>
+                        </select>
+                    </div>
+
+                    <button id="clearFilters" class="btn btn-secondary">Clear Filters</button>
+                </div>
+
+                <div class="histogram-section">
+                    <h2 class="section-title">
+                        <span class="icon">📊</span>
+                        Analytics
+                    </h2>
+                    
+                    <div class="histogram-controls">
+                        <label class="radio-label">
+                            <input type="radio" name="histType" value="skills" checked>
+                            <span>Skills</span>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="histType" value="subskills">
+                            <span>Subskills</span>
+                        </label>
+                    </div>
+
+                    <div class="chart-container">
+                        <canvas id="histogramChart"></canvas>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Content Area -->
+            <main class="content">
+                <!-- Prompts List -->
+                <section class="prompts-section">
+                    <h2 class="section-title">
+                        <span class="icon">📝</span>
+                        Prompts
+                    </h2>
+                    <div class="search-section">
+                        <input type="text" id="promptIdSearch" class="search-input" placeholder="Search by Prompt ID...">
+                        <button id="clearSearch" class="btn btn-secondary">Clear</button>
+                    </div>
+                    <div id="paginationControls"></div>
+                    <div id="promptsList" class="prompts-list">
+                        <div class="loading">Loading prompts...</div>
+                    </div>
+                    <div id="paginationControlsBottom"></div>
+                </section>
+
+            </main>
+        </div>
+    </div>
+
+    <!-- Modal Overlay for Prompt Analysis -->
+    <div class="modal-overlay" id="modalOverlay" style="display: none;">
+        <div class="modal-container">
+            <div class="modal-header">
+                <div class="modal-nav-section">
+                    <button id="prevPrompt" class="modal-nav-btn" title="Previous prompt (Left Arrow)">
+                        <span>‹</span>
+                    </button>
+                    <h2 class="modal-title">
+                        <span class="icon">🔬</span>
+                        Prompt Analysis
+                    </h2>
+                    <button id="nextPrompt" class="modal-nav-btn" title="Next prompt (Right Arrow)">
+                        <span>›</span>
+                    </button>
+                </div>
+                <div class="prompt-counter" id="promptCounter">
+                    <span class="counter-current">1</span>
+                    <span class="counter-separator">/</span>
+                    <span class="counter-total">0</span>
+                </div>
+                <button id="closeModal" class="modal-close-btn">✕</button>
+            </div>
+            
+            <div class="modal-content">
+                <div class="prompt-text" id="promptText"></div>
+                
+                <div class="skill-legend" id="skillLegend"></div>
+                
+                <div class="metadata">
+                    <span class="metadata-item">
+                        <strong>ID:</strong> <span id="promptId"></span>
+                    </span>
+                    <span class="metadata-item">
+                        <strong>Dataset:</strong> <span id="datasetId"></span>
+                    </span>
+                    <span class="metadata-item">
+                        <strong>Type:</strong> <span id="promptType"></span>
+                    </span>
+                    <span class="metadata-item">
+                        <strong>Model:</strong> <span id="llmModel"></span>
+                    </span>
+                </div>
+                
+                <div id="vqaQuestions" class="vqa-questions"></div>
+                
+                <div id="skillBreakdown" class="skill-breakdown"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,117 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+#  Usually these files are written by a python script from a template
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Flask stuff:
+instance/
+.webassets-cache
+
+# Scrapy stuff:
+.scrapy
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+.pybuilder/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+*.pyc
+*.env
+*.png
+*.old
+*.webp
+
+annotations/
+anchors/
+images/
+ai_answers/
+
+# Local-only artifacts (kept on disk, excluded from the submission tree)
+clean_files.ipynb
+reviews.txt
+assets_backup_may26.zip
+available_azure_models.txt
+tag_gecko_prompts_azure.py
+test_azure_oai.py
+scripts/outsourcing/
+
+# Anonymization mapping (cleartext) — never commit
+assets/_annotators_map.local.json
+
+# Release artefacts (archive output uploaded to Google Drive)
+release/
+dist/
+
+website/
+analysis/outputs
+
+.vscode
+.claude
+*.eps
+
+# uv
+.venv/

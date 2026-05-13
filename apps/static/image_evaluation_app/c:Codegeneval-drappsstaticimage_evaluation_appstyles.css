@@ -1,0 +1,26 @@
+
+/* No Text Button */
+.no-text-btn {
+    padding: 6px 12px;
+    background: #ffffff;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4b5563;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.no-text-btn:hover {
+    background: #f3f4f6;
+    border-color: #9ca3af;
+}
+
+.no-text-btn.selected {
+    background: #ef4444;
+    color: white;
+    border-color: #ef4444;
+}
+

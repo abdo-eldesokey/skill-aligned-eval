@@ -1,0 +1,264 @@
+{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "sc": "https://schema.org/",
+    "cr": "http://mlcommons.org/croissant/",
+    "data": {
+      "@id": "cr:data",
+      "@type": "@json"
+    },
+    "dataType": {
+      "@id": "cr:dataType",
+      "@type": "@vocab"
+    },
+    "examples": {
+      "@id": "cr:examples",
+      "@type": "@json"
+    },
+    "field": "cr:field",
+    "fileObject": "cr:fileObject",
+    "fileProperty": "cr:fileProperty",
+    "fileSet": "cr:fileSet",
+    "format": "cr:format",
+    "includes": "cr:includes",
+    "isLiveDataset": "cr:isLiveDataset",
+    "jsonPath": "cr:jsonPath",
+    "key": "cr:key",
+    "md5": "cr:md5",
+    "parentField": "cr:parentField",
+    "path": "cr:path",
+    "recordSet": "cr:recordSet",
+    "references": "cr:references",
+    "regex": "cr:regex",
+    "repeated": "cr:repeated",
+    "replace": "cr:replace",
+    "separator": "cr:separator",
+    "source": "cr:source",
+    "subField": "cr:subField",
+    "transform": "cr:transform"
+  },
+  "@type": "sc:Dataset",
+  "name": "skill-aligned-eval",
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "description": "Skill-aligned annotation framework for evaluating text-to-image models. 621 generated images from 7 generators, scored across 9 annotation strategies by 6 anonymized human annotators plus an LLM judge.",
+  "license": "https://creativecommons.org/licenses/by/4.0/",
+  "url": "https://drive.google.com/file/d/1SdLBIfSK9jKPl4Z3y95bds6jrIdt0_sG/view",
+  "version": "0.1.0",
+  "datePublished": "2026-01-01",
+  "creator": {
+    "@type": "Person",
+    "name": "Anonymous"
+  },
+  "keywords": [
+    "text-to-image",
+    "human-annotation",
+    "benchmark",
+    "skill-aligned-evaluation"
+  ],
+  "citeAs": "@inproceedings{neurips2026_skill_aligned, title={Skill-Aligned Annotation for Reliable Evaluation in Text-to-Image Generation}, author={Anonymous}, booktitle={NeurIPS}, year={2026}}",
+  "distribution": [
+    {
+      "@type": "cr:FileObject",
+      "@id": "archive",
+      "name": "skill-aligned-eval-assets.tar.gz",
+      "description": "Single tar.gz archive containing all images, anchors, prompts, and annotation JSONs.",
+      "contentUrl": "https://drive.google.com/uc?export=download&id=1SdLBIfSK9jKPl4Z3y95bds6jrIdt0_sG",
+      "encodingFormat": "application/gzip",
+      "sha256": "67854c7d73a5d1c7d719ffffda3abf14523afc74d88d685d111c8ce906cf1537"
+    },
+    {
+      "@type": "cr:FileSet",
+      "@id": "images",
+      "name": "images",
+      "description": "Generated images, named '{prompt_id}_{generator}.webp'.",
+      "containedIn": { "@id": "archive" },
+      "encodingFormat": "image/webp",
+      "includes": "assets/images/v8.1-gpt-5-mini/*.webp"
+    },
+    {
+      "@type": "cr:FileSet",
+      "@id": "anchors",
+      "name": "anchors",
+      "description": "Reference anchor images shown to annotators in anchor-based tasks.",
+      "containedIn": { "@id": "archive" },
+      "encodingFormat": "image/png",
+      "includes": "assets/anchors/v8.1-gpt-5-mini/*/*"
+    },
+    {
+      "@type": "cr:FileSet",
+      "@id": "prompts",
+      "name": "prompts",
+      "description": "Prompt metadata with skill tags, VQA questions, and dependencies.",
+      "containedIn": { "@id": "archive" },
+      "encodingFormat": "application/json",
+      "includes": "assets/generation_prompts/v8.1-gpt-5-mini/*.json"
+    },
+    {
+      "@type": "cr:FileSet",
+      "@id": "ai-answers",
+      "name": "ai_answers",
+      "description": "LLM ground-truth responses used in human-LLM correlation analysis.",
+      "containedIn": { "@id": "archive" },
+      "encodingFormat": "application/json",
+      "includes": "assets/ai_answers/*/*.json"
+    },
+    {
+      "@type": "cr:FileSet",
+      "@id": "annotations-anchor-bqa",
+      "name": "annotations_anchor_bqa",
+      "description": "Binary QA (yes/no/unsure) with reference anchor visible.",
+      "containedIn": { "@id": "archive" },
+      "encodingFormat": "application/json",
+      "includes": "assets/annotations/anchor_bqa/vqa/*/*.json"
+    },
+    {
+      "@type": "cr:FileSet",
+      "@id": "annotations-anchor-likert",
+      "name": "annotations_anchor_likert",
+      "description": "Likert (0-4) with reference anchor visible.",
+      "containedIn": { "@id": "archive" },
+      "encodingFormat": "application/json",
+      "includes": "assets/annotations/anchor_likert/vqa/*/*.json"
+    },
+    {
+      "@type": "cr:FileSet",
+      "@id": "annotations-no-anchor-bqa",
+      "name": "annotations_no_anchor_bqa",
+      "description": "Binary QA without a reference anchor.",
+      "containedIn": { "@id": "archive" },
+      "encodingFormat": "application/json",
+      "includes": "assets/annotations/no_anchor_bqa/vqa/*/*.json"
+    },
+    {
+      "@type": "cr:FileSet",
+      "@id": "annotations-text-likert",
+      "name": "annotations_text_likert",
+      "description": "Single Likert (1-5) for overall text rendering accuracy.",
+      "containedIn": { "@id": "archive" },
+      "encodingFormat": "application/json",
+      "includes": "assets/annotations/text_likert/vqa/*/*.json"
+    },
+    {
+      "@type": "cr:FileSet",
+      "@id": "annotations-text-per-word",
+      "name": "annotations_text_per_word",
+      "description": "Per-word correctness judgments and character-level artifact flags.",
+      "containedIn": { "@id": "archive" },
+      "encodingFormat": "application/json",
+      "includes": "assets/annotations/text_per_word/vqa/*/*.json"
+    },
+    {
+      "@type": "cr:FileSet",
+      "@id": "annotations-artifacts-likert",
+      "name": "annotations_artifacts_likert",
+      "description": "Likert (1-5) aesthetics and artifact-free rating.",
+      "containedIn": { "@id": "archive" },
+      "encodingFormat": "application/json",
+      "includes": "assets/annotations/artifacts_likert/vqa/*/*.json"
+    },
+    {
+      "@type": "cr:FileSet",
+      "@id": "annotations-artifacts-brush",
+      "name": "annotations_artifacts_brush",
+      "description": "Aesthetics rating with side-car PNG brush masks of artifact regions.",
+      "containedIn": { "@id": "archive" },
+      "encodingFormat": "application/json",
+      "includes": "assets/annotations/artifacts_brush/vqa/*/*.json"
+    },
+    {
+      "@type": "cr:FileSet",
+      "@id": "annotations-full-evaluation",
+      "name": "annotations_full_evaluation",
+      "description": "Combined per-(image, annotator): binary q's, per-word, aesthetics, brush mask path.",
+      "containedIn": { "@id": "archive" },
+      "encodingFormat": "application/json",
+      "includes": "assets/annotations/full_evaluation/vqa/*/*.json"
+    },
+    {
+      "@type": "cr:FileSet",
+      "@id": "annotations-full-evaluation-llm",
+      "name": "annotations_full_evaluation_llm",
+      "description": "LLM-generated full evaluation; segmenter artifact masks listed per image.",
+      "containedIn": { "@id": "archive" },
+      "encodingFormat": "application/json",
+      "includes": "assets/annotations/full_evaluation_llm/vqa/*/*.json"
+    }
+  ],
+  "recordSet": [
+    {
+      "@type": "cr:RecordSet",
+      "@id": "image-records",
+      "name": "images",
+      "description": "One record per generated image. Filename encodes (prompt_id, generator).",
+      "field": [
+        {
+          "@type": "cr:Field",
+          "@id": "image-records/image_id",
+          "name": "image_id",
+          "description": "Filename stem of the WebP file: '{prompt_id}_{generator}'.",
+          "dataType": "sc:Text",
+          "source": {
+            "fileSet": { "@id": "images" },
+            "extract": { "fileProperty": "filename" },
+            "transform": { "regex": "^(.+)\\.webp$" }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "image-records/content",
+          "name": "content",
+          "description": "Raw WebP image bytes.",
+          "dataType": "sc:ImageObject",
+          "source": {
+            "fileSet": { "@id": "images" },
+            "extract": { "fileProperty": "content" }
+          }
+        }
+      ]
+    },
+    {
+      "@type": "cr:RecordSet",
+      "@id": "annotation-files",
+      "name": "annotation_files",
+      "description": "Each JSON file holds one or more annotator entries keyed by annotator_id (annotator_01..annotator_06 for humans, llm_judge:<model> for the LLM judge). Per-strategy schemas vary; see the README.",
+      "field": [
+        {
+          "@type": "cr:Field",
+          "@id": "annotation-files/strategy",
+          "name": "strategy",
+          "description": "Annotation strategy: anchor_bqa | anchor_likert | no_anchor_bqa | text_likert | text_per_word | artifacts_likert | artifacts_brush | full_evaluation | full_evaluation_llm.",
+          "dataType": "sc:Text",
+          "source": {
+            "fileSet": { "@id": "annotations-full-evaluation" },
+            "extract": { "fileProperty": "filepath" },
+            "transform": { "regex": "assets/annotations/([^/]+)/vqa/.*" }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "annotation-files/generator",
+          "name": "generator",
+          "description": "T2I generator: flux1-dev | flux2-dev | flux2-pro | nano-banana-1 | qwen-image | wan-2.5-preview | z-image.",
+          "dataType": "sc:Text",
+          "source": {
+            "fileSet": { "@id": "annotations-full-evaluation" },
+            "extract": { "fileProperty": "filepath" },
+            "transform": { "regex": "assets/annotations/[^/]+/vqa/([^/]+)/.*" }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "annotation-files/prompt_id",
+          "name": "prompt_id",
+          "description": "Numeric prompt id (filename stem).",
+          "dataType": "sc:Text",
+          "source": {
+            "fileSet": { "@id": "annotations-full-evaluation" },
+            "extract": { "fileProperty": "filename" },
+            "transform": { "regex": "^(.+)\\.json$" }
+          }
+        }
+      ]
+    }
+  ]
+}
