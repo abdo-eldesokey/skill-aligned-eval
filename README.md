@@ -1,9 +1,9 @@
 # Skill-Aligned Annotation for Reliable Evaluation in Text-to-Image Generation
 
 <p align="center">
-  <a href="#"><img alt="Paper" src="https://img.shields.io/badge/Paper-PDF-b31b1b.svg"></a>
+  <a href="https://arxiv.org/abs/2605.13223"><img alt="Pre-print" src="https://img.shields.io/badge/Paper-PDF-b31b1b.svg"></a>
   <a href="https://abdo-eldesokey.github.io/skill-aligned-eval/"><img alt="Project Page" src="https://img.shields.io/badge/Project-Page-1f72ff.svg"></a>
-  <a href="#"><img alt="Dataset" src="https://img.shields.io/badge/Dataset-Google%20Drive-1a73e8.svg"></a>
+  <a href="https://drive.google.com/file/d/1SdLBIfSK9jKPl4Z3y95bds6jrIdt0_sG/view"><img alt="Dataset" src="https://img.shields.io/badge/Dataset-Google%20Drive-1a73e8.svg"></a>
   <a href="https://creativecommons.org/licenses/by/4.0/"><img alt="License: CC BY 4.0" src="https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg"></a>
 </p>
 
